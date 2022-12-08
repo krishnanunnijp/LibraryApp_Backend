@@ -27,6 +27,19 @@ public class BookController {
         map.put("status","success");
         return map;
     }
-
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/search", consumes = "application/json", produces = "application/json")
+    public List<books> search(@RequestBody books b){
+        return dao.searchBooks(b.getTitle());
+    }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/delete",consumes = "application/json",produces = "application/json")
+    public HashMap<String,String> delete(@RequestBody books b) {
+        HashMap<String, String> map = new HashMap<>();
+        System.out.println(String.valueOf(b.getId()));
+        dao.deleteBooks(b.getId());
+        map.put("status","success");
+        return map;
+    }
 
 }
