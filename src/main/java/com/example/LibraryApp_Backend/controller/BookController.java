@@ -1,8 +1,10 @@
 package com.example.LibraryApp_Backend.controller;
 
 import com.example.LibraryApp_Backend.dao.bookDao;
+import com.example.LibraryApp_Backend.dao.issueDao;
 import com.example.LibraryApp_Backend.dao.userDao;
 import com.example.LibraryApp_Backend.model.books;
+import com.example.LibraryApp_Backend.model.issue;
 import com.example.LibraryApp_Backend.model.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ public class BookController {
     bookDao dao;
     @Autowired
     userDao dao2;
+    @Autowired
+    issueDao dao3;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/")
@@ -60,6 +64,15 @@ public class BookController {
     @PostMapping(path = "/login",consumes = "application/json",produces = "application/json")
     public List<user> login(@RequestBody user u){
         return dao2.passwordCheck(u.getUsername(),u.getPassword1());
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/addissue",consumes = "application/json",produces = "application/json")
+    public HashMap<String, String> addissue(@RequestBody issue i){
+        HashMap<String, String> map = new HashMap<>();
+        dao3.save(i);
+        map.put("status","success");
+        return map;
     }
 
 
