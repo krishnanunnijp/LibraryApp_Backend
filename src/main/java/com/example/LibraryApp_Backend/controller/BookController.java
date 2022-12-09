@@ -56,4 +56,11 @@ public class BookController {
         return map;
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/login",consumes = "application/json",produces = "application/json")
+    public List<user> login(@RequestBody user u){
+        return dao2.passwordCheck(u.getUsername(),u.getPassword1());
+    }
+
+
 }
